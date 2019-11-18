@@ -5,6 +5,6 @@ before_install:
     - pip install pytest pytest-cov
     - pip install codecov
 script:
-    - pytest --cov=./
+    - python -m pytest OttoDiff/test_forward.py
 after_success:
     - codecov
