@@ -1,4 +1,6 @@
-# Milestone 1: Group 6
+# Milestone 2: Group 6
+
+Team Members: Kyra Ballard, Paul-Emile Landrin, Yaoyang Lin, Dan Park 
 
 ## Introduction
 
