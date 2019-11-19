@@ -173,3 +173,21 @@ def test_jacobian():
     x = Variable(10)
     y = -x
     assert y.der == y.get_jacobian(), "Error in get_jacobian: incorrect value"
+
+def test_arctan():
+    x = Variable(5)
+    y = np.arctan(x)
+    assert y.val == np.arctan(5), "Error in arctan: incorrect value"
+    assert y.der == 1/(1+25), "Error in arctan: incorrect derivative"
+
+def test_arccos():
+    x = Variable(0.5)
+    y = np.arccos(x)
+    assert y.val == np.arccos(0.5), "Error in arccos: incorrect value"
+    assert y.der == -1/np.sqrt(1-0.25), "Error in arccos: incorrect derivative"
+
+def test_arcsin():
+    x = Variable(0.5)
+    y = np.arcsin(x)
+    assert y.val == np.arcsin(0.5), "Error in arcsin: incorrect value"
+    assert y.der == 1/np.sqrt(1-0.25), "Error in arcsin: incorrect derivative"
