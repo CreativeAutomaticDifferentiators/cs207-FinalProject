@@ -1,5 +1,4 @@
 import numpy as np
-import math
 
 class Variable:
     def __init__(self, val, der=1):
@@ -115,27 +114,19 @@ class Variable:
             a^x
             Chain Rule: d/dx(a^f(x)) = ln(a) * a^f(x) * f'(x)
         '''
-        return Variable(base.val**self.val, np.log(base.val) * (base ** self.val) * self.der)
+        return Variable(base**self.val, np.log(base) * (base ** self.val) * self.der)
 
     def exp(self):
         return (np.e)**self
 
-    def log(self, base):
+    def log(self):
         '''
-            log_a(x)
-            Chain Rule: log_a'(x) = 1/(x * ln(a)) * x'
-        '''
-        return Variable(math.log(self.val, base), 1 / (self.val * np.log(base.val)) * (self.der))
-
-    def ln(self):
-        '''
-            ln(x)
+            np.log(x)
             Chain Rule: ln'(x) = 1/x * x'
         '''
-        return self.log(np.e)
+        return Variable(np.log(self.val), 1 / (self.val) * (self.der))
 
     # -trig functions (sine, cosine, tangent)
-
     def sin(self):
         '''
             sin(x)
@@ -174,7 +165,7 @@ class Variable:
             Chain Rule: -1/sqrt(1-x^2) * x'
         '''
         if self.val <= -1 or self.val >= 1:
-            raise ValueError("input of arcsin should within (-1, 1)")
+            raise ValueError("input of arccos should within (-1, 1)")
         return Variable(np.arccos(self.val), -1/np.sqrt(1 - self.val**2) * self.der)
 
     def arctan(self):
@@ -190,5 +181,6 @@ class Variable:
     def get_jacobian(self):
         '''
             Get the Jacobian matrix of partial derivatives.
+            For this milestone, the Jacobian will just be a scalar.
         '''
-        return 0
+        return self.der
