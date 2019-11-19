@@ -191,3 +191,23 @@ def test_arcsin():
     y = np.arcsin(x)
     assert y.val == np.arcsin(0.5), "Error in arcsin: incorrect value"
     assert y.der == 1/np.sqrt(1-0.25), "Error in arcsin: incorrect derivative"
+
+def test_tan_invalid():
+    with pytest.raises(ValueError):
+        x = Variable(np.pi/2)
+        y = np.tan(x)
+
+def test_arccos_invalid():
+    with pytest.raises(ValueError):
+        x = Variable(5)
+        y = np.arccos(x)
+
+def test_arcsin_invalid():
+    with pytest.raises(ValueError):
+        x = Variable(5)
+        y = np.arcsin(x)
+
+def test_truediv_invalid():
+    with pytest.raises(ZeroDivisionError):
+        x = Variable(5)
+        y = x/0
