@@ -2,16 +2,13 @@ import pytest
 from forward import *
 import numpy as np
 
-def test_addition():
+def test_add_objects():
     x = Variable(1, np.array([1,0,0]))
     y = Variable(2, np.array([0,1,0]))
     z = Variable(3, np.array([0,0,1]))
-    
     f = x + y + z
-    
-    assert f.val == 6, "Error in Addition: value does not match correct value"
-    assert (f.der == np.array([1,1,1])).all(), "Error in Addition: derivative does not match correct value"
-
+    assert f.val == 6, "Error in add: incorrect value"
+    assert (f.der == np.array([1,1,1])).all(), "Error in add: incorrect derivative"
 
 def test_mul():
     x = Variable(3)
@@ -211,3 +208,44 @@ def test_truediv_invalid():
     with pytest.raises(ZeroDivisionError):
         x = Variable(5)
         y = x/0
+
+def test_rtruediv_invalid():
+    with pytest.raises(ZeroDivisionError):
+        x = Variable(5)
+        y = x/0
+
+def test_rtruediv_invalid():
+    with pytest.raises(ZeroDivisionError):
+        x = Variable(0)
+        y = 2/x
+
+def test_add_invalid():
+    with pytest.raises(TypeError):
+        x = Variable(5)
+        y = x + 'string'
+
+def test_mul_invalid():
+    with pytest.raises(TypeError):
+        x = Variable(5)
+        y = x * 'string'
+
+def test_mul_objects():
+    x = Variable(5, np.array([1,0]))
+    y = Variable(4, np.array([0,1]))
+    z = x * y
+    assert z.val == 20, "Error in mul: incorrect value"
+    assert (z.der == np.array([4,5])).all(), "Error in mul: incorrect derivative"
+    
+def test_truediv_objects():
+    x = Variable(4, np.array([1,0]))
+    y = Variable(2, np.array([0,1]))
+    z = x / y
+    assert z.val == 2, "Error in truediv: incorrect value"
+    assert (z.der == np.array([1/2,-1])).all(), "Error in truediv: incorrect derivative"
+
+def test_rtruediv_objects():
+    x = Variable(4, np.array([1,0]))
+    y = Variable(2, np.array([0,1]))
+    z = y / x
+    assert z.val == 1/2, "Error in rtruediv: incorrect value"
+    assert (z.der == np.array([-2/16,1/4])).all(), "Error in rtruediv: incorrect derivative"
