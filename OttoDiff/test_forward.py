@@ -204,17 +204,12 @@ def test_arcsin_invalid():
         x = Variable(5)
         y = np.arcsin(x)
 
-def test_truediv_invalid():
+def test_truediv_invalid_zero():
     with pytest.raises(ZeroDivisionError):
         x = Variable(5)
         y = x/0
 
-def test_rtruediv_invalid():
-    with pytest.raises(ZeroDivisionError):
-        x = Variable(5)
-        y = x/0
-
-def test_rtruediv_invalid():
+def test_rtruediv_invalid_zero():
     with pytest.raises(ZeroDivisionError):
         x = Variable(0)
         y = 2/x
@@ -228,6 +223,16 @@ def test_mul_invalid():
     with pytest.raises(TypeError):
         x = Variable(5)
         y = x * 'string'
+
+def test_truediv_invalid_type():
+    with pytest.raises(TypeError):
+        x = Variable(5)
+        y = x / 'string'
+
+def test_rtruediv_invalid_type():
+    with pytest.raises(TypeError):
+        x = Variable(5)
+        y = 'string' / x
 
 def test_mul_objects():
     x = Variable(5, np.array([1,0]))
