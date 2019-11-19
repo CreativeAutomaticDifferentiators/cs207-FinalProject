@@ -120,3 +120,56 @@ def test_log_neg():
     y = np.log(-x)
     assert y.val == np.log(4), "Error in log: incorrect value"
     assert y.der == -1/4, "Error in log: incorrect derivative"
+
+def test_tan():
+    x = Variable(4)
+    y = np.tan(x)
+    assert y.val == np.tan(4), "Error in tan: incorrect value"
+    assert y.der == 1/np.cos(4)**2, "Error in tan: incorrect derivative"
+
+def test_pow():
+    x = Variable(3)
+    y = x**4
+    assert y.val == 81, "Error in pow: incorrect value"
+    assert y.der == 108, "Error in pow: incorrect derivative"
+
+def test_pow_neg():
+    x = Variable(3)
+    y = x**(-2)
+    assert y.val == 1/9, "Error in pow: incorrect value"
+    assert y.der == -2/27, "Error in pow: incorrect derivative"
+
+def test_rpow():
+    x = Variable(3)
+    y = (2)**x
+    assert y.val == 8, "Error in rpow: incorrect value"
+    assert y.der == 8*np.log(2), "Error in rpow: incorrect derivative"
+
+def test_sqrt():
+    x = Variable(4)
+    y = np.sqrt(x)
+    assert y.val == np.sqrt(4), "Error in sqrt: incorrect value"
+    assert y.der == 0.5/np.sqrt(4), "Error in sqrt: incorrect derivative"
+
+def test_truediv():
+    x = Variable(10)
+    y = x/4
+    assert y.val == 10/4, "Error in truediv: incorrect value"
+    assert y.der == 1/4, "Error in truediv: incorrect derivative"
+
+def test_rtruediv():
+    x = Variable(10)
+    y = 4/x
+    assert y.val == 4/10, "Error in rtruediv: incorrect value"
+    assert y.der == -4/100, "Error in rtruediv: incorrect derivative"
+
+def test_neg():
+    x = Variable(10)
+    y = -x
+    assert y.val == -10, "Error in neg: incorrect value"
+    assert y.der == -1, "Error in neg: incorrect derivative"
+
+def test_jacobian():
+    x = Variable(10)
+    y = -x
+    assert y.der == y.get_jacobian(), "Error in get_jacobian: incorrect value"
