@@ -120,7 +120,7 @@ class Variable:
         return Variable(base**self.val, np.log(base) * (base ** self.val) * self.der)
 
     def exp(self):
-        return (np.e)**self
+        return Variable(np.exp(self.val), np.exp(self.val) * self.der)
 
     def log(self):
         '''
