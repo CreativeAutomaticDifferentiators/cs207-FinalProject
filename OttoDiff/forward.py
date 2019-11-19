@@ -109,6 +109,9 @@ class Variable:
         '''
         return Variable(self.val ** power, power * self.val ** (power - 1) * self.der)
 
+    def sqrt(self):
+        return Variable(self.val, self.der) ** 0.5
+
     def __rpow__(self, base):
         '''
             a^x
