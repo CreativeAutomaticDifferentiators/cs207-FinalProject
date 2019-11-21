@@ -6,6 +6,7 @@ with open("README.md", "r") as fh:
 setuptools.setup(
     name="OttoDiff",
     version="0.0.2",
+    scripts=['OttoDiff/forward/forward.py'],
     author="Dan Park, Paul-Emile Landrin, Yaoyang Lin, Kyra Ballard",
     author_email="dpark@mba2020.hbs.edu, plandrin@g.harvard.edu,"+\
                  "yaoyanglin@g.harvard.edu, kballard@g.harvard.edu",
