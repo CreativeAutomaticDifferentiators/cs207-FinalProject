@@ -4,7 +4,7 @@ import os
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 import pytest
-from forward.forward import *
+from forward import *
 import numpy as np
 
 def test_add_objects():
