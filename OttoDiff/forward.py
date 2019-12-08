@@ -788,6 +788,12 @@ class Variable:
         """
         return "val: " + str(self.val) + " der: " + str(self.der)
 
+    def get_jacobian(self):
+        """
+            Get the Jacobian matrix of partial derivatives.
+        """
+        return self.der
+
 class VectorVariable(Variable):
     def __init__(self, vals, jacobian):
         """
