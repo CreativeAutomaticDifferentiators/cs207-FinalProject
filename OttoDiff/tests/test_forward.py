@@ -270,6 +270,11 @@ def test_eq_equal():
     y = Variable(1)
     assert (x == y) == False, "Error in __eq__: incorrect equality"
 
+def test_eq_other_object():
+    x = Variable(2)
+    y = 2
+    assert (x == y) == False, "Error in __eq__: incorrect equality"
+
 def test_ne_not_equal():
     x = Variable(2)
     y = Variable(2)
@@ -327,3 +332,7 @@ def test_tanh():
     y = x.tanh()
     assert y.val == (np.exp(5)-np.exp(-5))/(np.exp(5)+np.exp(-5)), "Error in tanh: incorrect value"
     assert y.der == (1/np.cosh(5))**2, "Error in tanh: incorrect derivative"
+
+def test_str():
+    x = Variable(3)
+    assert str(x) == "val: " + str(x.val) + " der: " + str(x.der)
