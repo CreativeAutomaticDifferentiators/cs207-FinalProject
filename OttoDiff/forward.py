@@ -600,7 +600,7 @@ class Variable:
             ========
             a new Variable represents cos(x)
             new val = sin(self.val)
-            new der = cos'(x) = sin(x) * x'
+            new der = cos'(x) = -sin(x) * x'
 
             EXAMPLES
             =========
