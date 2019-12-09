@@ -259,3 +259,71 @@ def test_rtruediv_objects():
     z = y / x
     assert z.val == 1/2, "Error in rtruediv: incorrect value"
     assert (z.der == np.array([-2/16,1/4])).all(), "Error in rtruediv: incorrect derivative"
+
+def test_eq_not_equal():
+    x = Variable(2)
+    y = Variable(2)
+    assert x == y, "Error in __eq__: incorrect equality"
+
+def test_eq_equal():
+    x = Variable(2)
+    y = Variable(1)
+    assert (x == y) == False, "Error in __eq__: incorrect equality"
+
+def test_ne_not_equal():
+    x = Variable(2)
+    y = Variable(2)
+    assert (x != y) == False, "Error in __ne__: incorrect equality"
+
+def test_ne_equal():
+    x = Variable(2)
+    y = Variable(1)
+    assert x != y, "Error in __ne__: incorrect equality"
+
+def test_logarithm():
+    x = Variable(8)
+    y = x.logarithm(2)
+    assert y.val == 3, "Error in logarithm: incorrect value"
+    assert y.der == 1/(8*np.log(2)), "Error in logarithm: incorrect derivative"
+
+def test_logarithm_neg():
+    x = Variable(27)
+    with pytest.raises(ValueError):
+        y = x.logarithm(-3)
+
+def test_logarithm_one():
+    x = Variable(27)
+    with pytest.raises(ValueError):
+        y = x.logarithm(1)
+
+def test_logistic():
+    x = Variable(4)
+    y = x.logistic()
+    gx = 1/(1+np.exp(-4))
+    assert y.val == gx, "Error in logistic: incorrect value"
+    assert y.der == gx*(1-gx), "Error in logistic: incorrect derivative"
+
+def test_logistic_neg():
+    x = Variable(-4)
+    y = x.logistic()
+    gx = 1/(1+np.exp(4))
+    assert y.val == gx, "Error in logistic: incorrect value"
+    assert y.der == gx*(1-gx), "Error in logistic: incorrect derivative"
+
+def test_sinh():
+    x = Variable(5)
+    y = x.sinh()
+    assert y.val == (np.exp(5)-np.exp(-5))/2, "Error in sinh: incorrect value"
+    assert y.der == np.cosh(5), "Error in sinh: incorrect derivative"
+
+def test_cosh():
+    x = Variable(5)
+    y = x.cosh()
+    assert y.val == (np.exp(5)+np.exp(-5))/2, "Error in cosh: incorrect value"
+    assert y.der == np.sinh(5), "Error in cosh: incorrect derivative"
+
+def test_tanh():
+    x = Variable(5)
+    y = x.tanh()
+    assert y.val == (np.exp(5)-np.exp(-5))/(np.exp(5)+np.exp(-5)), "Error in tanh: incorrect value"
+    assert y.der == (1/np.cosh(5))**2, "Error in tanh: incorrect derivative"
