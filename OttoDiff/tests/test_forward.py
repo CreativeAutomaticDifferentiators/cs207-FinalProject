@@ -36,6 +36,11 @@ def test_reset():
     adf.reset()
     assert adf.var2idx == {}, "Error in reset: failed to reset variables"
 
+def test_getVerboseInformation():
+    adf = AutoDiffFwd()
+    x, y = adf.createVariables(['x', 'y'], [1, 2])
+    adf.getVerboseInformation(x) # should not throw error
+
 ### Variable tests ###
 
 def test_add_objects():
@@ -367,3 +372,59 @@ def test_tanh():
 def test_str():
     x = Variable(3)
     assert str(x) == "val: " + str(x.val) + " der: " + str(x.der)
+
+### VectorVariable tests ###
+
+def test_vv_jacobian():
+    vals = np.array([3,2])
+    ders = np.array([[1,1],[6,5]])
+    vv = VectorVariable(vals, ders)
+    assert (vv.get_jacobian() == ders).all(), "Error in get_jacobian: incorrect derivatives"
+
+def test_vv_ne_equal():
+    vals = np.array([1,3])
+    ders = np.array([[5,4],[2,1]])
+    vv1 = VectorVariable(vals, ders)
+    vv2 = VectorVariable(vals, ders)
+    assert not (vv1 != vv2), "Error in __ne__: incorrect equality"
+
+def test_vv_ne_not_object():
+    vals = np.array([1,3])
+    ders = np.array([[5,4],[2,1]])
+    vv = VectorVariable(vals, ders)
+    assert vv != 'string', "Error in __ne__: incorrect equality"
+
+def test_vv_ne_not_equal():
+    vals1 = np.array([1,3])
+    vals2 = np.array([6,7])
+    ders = np.array([[5,4],[2,1]])
+    vv1 = VectorVariable(vals1, ders)
+    vv2 = VectorVariable(vals2, ders)
+    assert vv1 != vv2, "Error in __ne__: incorrect equality"
+
+def test_vv_eq_equal():
+    vals = np.array([1,3])
+    ders = np.array([[5,4],[2,1]])
+    vv1 = VectorVariable(vals, ders)
+    vv2 = VectorVariable(vals, ders)
+    assert vv1 == vv2, "Error in __eq__: incorrect equality"
+
+def test_vv_eq_not_object():
+    vals = np.array([1,3])
+    ders = np.array([[5,4],[2,1]])
+    vv = VectorVariable(vals, ders)
+    assert not (vv == 'string'), "Error in __eq__: incorrect equality"
+
+def test_vv_eq_not_equal():
+    vals1 = np.array([1,3])
+    vals2 = np.array([6,7])
+    ders = np.array([[5,4],[2,1]])
+    vv1 = VectorVariable(vals1, ders)
+    vv2 = VectorVariable(vals2, ders)
+    assert not (vv1 == vv2), "Error in __eq__: incorrect equality"
+
+def test_vv_str():
+    vals = np.array([1,3])
+    ders = np.array([[5,4],[2,1]])
+    vv = VectorVariable(vals, ders)
+    assert str(vv) == "vals: " + str(vals) + " jacobian: " + str(ders)
