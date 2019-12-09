@@ -276,6 +276,16 @@ def test_logarithm_one():
     with pytest.raises(ValueError):
         y = x.logarithm(1)
 
+def test_add_error():
+    x = VariableNode(27)
+    with pytest.raises(TypeError):
+        y = x + 'string'
+
+def test_radd_error():
+    x = VariableNode(27)
+    with pytest.raises(TypeError):
+        y = 'string' + x
+
 def test_logistic():
     x = VariableNode(4)
     y = x.logistic()

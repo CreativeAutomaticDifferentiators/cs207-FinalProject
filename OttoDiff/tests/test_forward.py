@@ -7,6 +7,37 @@ import pytest
 from forward import *
 import numpy as np
 
+### AutoDiffFwd tests ###
+
+def test_createVariables():
+    names = ['x','y']
+    vals = [3,2]
+    adf = AutoDiffFwd()
+    x,y = adf.createVariables(names,vals)
+    assert x.val == 3, "Error in createVariables: incorrect value"
+    assert y.val == 2, "Error in createVariables: incorrect value"
+    assert (x.der == np.array([1,0])).all(), "Error in createVariables: incorrect derivative"
+    assert (y.der == np.array([0,1])).all(), "Error in createVariables: incorrect derivative"
+
+def test_createVectorFunction():
+    adf = AutoDiffFwd()
+    x, y = adf.createVariables(['x', 'y'], [1, 2])
+    f1 = x * (y ** 2)
+    f2 = np.sin(x * y)
+    vecf = adf.createVectorFunction([f1, f2])
+    vals = np.array([4,np.sin(2)])
+    ders = np.array([[4,4],[2*np.cos(2),np.cos(2)]])
+    assert (vecf.val == vals).all(), "Error in createVectorFuntion: incorrect value"
+    assert (vecf.der == ders).all(), "Error in createVariables: incorrect derivative"
+
+def test_reset():
+    adf = AutoDiffFwd()
+    x, y = adf.createVariables(['x', 'y'], [1, 2])
+    adf.reset()
+    assert adf.var2idx == {}, "Error in reset: failed to reset variables"
+
+### Variable tests ###
+
 def test_add_objects():
     x = Variable(1, np.array([1,0,0]))
     y = Variable(2, np.array([0,1,0]))
