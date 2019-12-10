@@ -5,15 +5,15 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="OttoDiff",
-    version="0.0.2",
-    scripts=['OttoDiff/forward/forward.py'],
+    version="1.0.0",
+    scripts=['OttoDiff/forward.py','OttoDiff/reverse.py', 'OttoDiff/visualization.py'],
     author="Dan Park, Paul-Emile Landrin, Yaoyang Lin, Kyra Ballard",
     author_email="dpark@mba2020.hbs.edu, plandrin@g.harvard.edu,"+\
                  "yaoyanglin@g.harvard.edu, kballard@g.harvard.edu",
     description="Package used for automatic differentiation",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/CreativeAutomaticDifferentiators/cs207-FinalProject/archive/0.0.2.tar.gz",
+    url="https://github.com/CreativeAutomaticDifferentiators/cs207-FinalProject/archive/1.0.0.tar.gz",
     packages=setuptools.find_packages(),
     classifiers=[
         "Programming Language :: Python :: 3",
