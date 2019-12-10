@@ -1,5 +1,5 @@
 from graphviz import Digraph
-from reverse import *
+from OttoDiff.reverse import *
 
 def createGraph(root, computationalGraph):
     # use dfs to traverse the computational graph
