@@ -8,16 +8,25 @@ import numpy as np
 def find_df_dx(f, x):
     """Find the partial derivative of f with respect to given x
 
+    INPUTS
+    =======
+    f: VariableNode
+    x: VariableNode
+
+    RETURNS
+    ========
+    Returns the partial derivative of ∂f/∂(self)
+
     EXAMPLES
     =========
     >>> x = VariableNode(3)
     >>> f = 2 * x
-    >>> print(find_df_dx(f=v, x=x))
+    >>> print(find_df_dx(f=f, x=x))
     6
     """
     # set the gradient of final output node to be 1
     f._grad = 1
-    # the gradient you you reho
+    # find the gradient of the target node
     return x.grad
 
 class VariableNode:
@@ -27,16 +36,21 @@ class VariableNode:
     idCounter = 0
 
     def __init__(self, val, parents = [], op=""):
+        """
+        val: int/float, value of node
+        _grad: int/float, value of the gradient (∂f/∂(self))
+        children: list of tuple, (∂(child)/∂(self), child node)
+        parents: list of nodes, use for back traverse the tree
+        operation: the operation happened in this node,
+                   the operation and the parents of the node forms an computation
+        name: Node name used for visualization
+        """
         self.val = val
-        # ∂f/∂(self)
         self._grad = None
-        # list of tuple (∂(child)/∂(self), child)
         self.children = []
-        # use for back traverse the tree
         self.parents = parents
         # all nodes are named X_i
         VariableNode.idCounter += 1
-        # the operation and the parents of the node forms an computation
         self.operation = op
         self.name = f"X_{VariableNode.idCounter} [" + '%.3f'%(val) + "] " + self.operation
 
@@ -47,8 +61,21 @@ class VariableNode:
         return self._grad
 
     def compute_grad(self):
-        # by chain rule
-        # ∂f/∂(self) = sum (∂(child)/∂(self) * ∂f/∂(child))
+        """Find the gradient of the node recursively
+
+        RETURNS
+        ========
+        Returns the partial derivative of ∂f/∂(self)
+        by chain rule
+        ∂f/∂(self) = sum (∂(child)/∂(self) * ∂f/∂(child))
+
+        EXAMPLES
+        =========
+        >>> x = VariableNode(3)
+        >>> f = 2 * x
+        >>> print(x.compute_grad())
+        6
+        """
         self._grad = sum(p_der * var.grad for p_der, var in self.children)
         return self._grad
 

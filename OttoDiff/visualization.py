@@ -11,16 +11,22 @@ def createGraph(root, computationalGraph):
         createGraph(par, computationalGraph)
 
 def visualize(final_output_node):
+    """Find the partial derivative of f with respect to given x
+
+    INPUTS
+    =======
+    final_output_node: VariableNode of the function
+
+    RETURNS
+    ========
+    Create the graph and store it in Digraph.gv.pdf in root directory
+
+    EXAMPLES
+    =========
+    >>> x = VariableNode(3)
+    >>> f = 2 * x + np.sin(x)
+    >>> visualize(f)
+    """
     computationalGraph = Digraph()
     createGraph(final_output_node, computationalGraph)
     computationalGraph.view()
-
-
-# x = VariableNode(3)
-# y = VariableNode(5)
-# z = VariableNode(7)
-# # build the tree
-# v = x / 2 + 2 / x + 2 * y + z
-# print(find_df_dx(f=v, x=x))
-#
-# visualize(v)
