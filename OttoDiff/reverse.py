@@ -88,7 +88,7 @@ class VariableNode:
             other = Constant(other)
         try:
             # create child
-            z = VariableNode(self.val + other.val,
+            z = VariableNode(self.val - other.val,
                              parents = [self, other],
                              op = "<sub>")
             # z = x - other  -> dz/dself = 1, dz/dother = -1
@@ -103,7 +103,7 @@ class VariableNode:
             other = Constant(other)
         try:
             # create child
-            z = VariableNode(self.val + other.val,
+            z = VariableNode(other.val - self.val,
                              parents = [self, other],
                              op = "<sub>")
             # z = other - x  -> dz/dself = -1, dz/dother = 1

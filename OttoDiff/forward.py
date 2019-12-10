@@ -77,8 +77,8 @@ class AutoDiffFwd:
             print("Current function is an multivariate function")
         if len(var.der.shape) > 1:
             print("Current function is an vector function")
-        for var_name, i in self.var2idx.items():
-            print("partial derivative with respect of " + var_name + " is " + str(var.der[:,i]))
+            for var_name, i in self.var2idx.items():
+                print("partial derivative with respect of " + var_name + " is " + str(var.der[:,i]))
 
 
 class Variable:
